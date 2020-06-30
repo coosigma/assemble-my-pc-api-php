@@ -8,7 +8,16 @@ class ComponentController extends Controller
 {
     public function index()
     {
-        return Component::all();
+        $res = Component::all();
+        if (count($res) !== 0) {
+            return $res;
+        } else {
+            return response()->json([
+                "status" => "404",
+                "details" => [
+                    "message" => "no components founded"],
+            ]);
+        }
     }
 
     public function searchById($id)
@@ -36,7 +45,7 @@ class ComponentController extends Controller
                 "status" => "404",
                 "details" => [
                     "category" => $category,
-                    "message" => "components of the category not found"],
+                    "message" => "no components of the category founded"],
             ]);
         }
     }
