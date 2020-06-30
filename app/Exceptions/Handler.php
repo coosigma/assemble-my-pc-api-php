@@ -50,6 +50,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception->getMessage() === "Too Many Attempts.") {
+            return response()->json([
+                "status" => $exception->getStatusCode(),
+                "details" => ['message' => $exception->getMessage()],
+            ]);
+        }
         return parent::render($request, $exception);
     }
 }
