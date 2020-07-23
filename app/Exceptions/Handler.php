@@ -4,6 +4,9 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
+use Illuminate\Http\Exceptions\ThrottleRequestsException as ThrottleRequestsException;
+use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -50,10 +53,17 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if ($exception->getMessage() === "Too Many Attempts.") {
+        if ($exception instanceof ThrottleRequestsException) {
             return response()->json([
                 "status" => $exception->getStatusCode(),
                 "details" => ['message' => $exception->getMessage()],
+            ]);
+        } elseif ($exception instanceof ModelNotFoundException) {
+            return response()->json([
+                "status" => "404",
+                "details" => [
+                    "message" => $exception->getMessage(),
+                ]
             ]);
         }
         return parent::render($request, $exception);

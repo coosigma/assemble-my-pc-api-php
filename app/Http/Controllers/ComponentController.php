@@ -20,19 +20,9 @@ class ComponentController extends Controller
         }
     }
 
-    public function searchById($id)
+    public function searchById(Component $component)
     {
-        $component = Component::find($id);
-        if ($component) {
-            return $component;
-        } else {
-            return response()->json([
-                "status" => "404",
-                "details" => [
-                    "id" => $id,
-                    "message" => "component not found"],
-            ]);
-        }
+        return $component;
     }
 
     public function searchByCategory($category)
