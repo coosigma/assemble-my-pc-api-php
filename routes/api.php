@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('all-components', 'ComponentController@index');
+// Route::get('all-components', 'ComponentController@index');
 Route::get('components/{category}', 'ComponentController@searchByCategory');
-Route::get('component/{component}', 'ComponentController@searchById');
+Route::get('component/{id}', 'ComponentController@searchById');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
