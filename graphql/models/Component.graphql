@@ -1,0 +1,13 @@
+extend type Query {
+    components(category: String!): [Component!]
+    component(id: ID!): Component
+}
+
+type Component {
+    id: ID!
+    name: String
+    price: Float
+    type: String
+    manufacturer: String
+    GPUIntegrated: Boolean
+}
